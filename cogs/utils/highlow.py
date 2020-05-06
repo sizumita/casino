@@ -55,7 +55,7 @@ class HighAndLow:
             
             next = self.deck.next()
 
-            if (card.rank == 0 and message.content == 'l') or (card.rank == 13 and message.content == 'h'):
+            if (card.rank == 1 and message.content == 'l') or (card.rank == 13 and message.content == 'h'):
                 embed = discord.Embed(title='エラー', description='それは選べませんね...次のカードから再スタートします。')
                 file = discord.File(next.path(), filename="image.png")
                 embed.set_image(url="attachment://image.png")

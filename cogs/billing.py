@@ -31,6 +31,14 @@ class Billing(commands.Cog):
         if money > self.bot.players[ctx.author.id]:
             await ctx.send('指定されたnyan額はあなたの所持金をオーバーしています。')
             return
+        
+        if money <= 0:
+            await ctx.send('0以下の金額は指定できません。')
+            return
+        
+        self.bot.players[ctx.author.id] -= money
+        self.bot.players[to.id] += money
+        await ctx.send(f'{to.mention}さんに{money}nyanを送りました。')
 
     @commands.command()
     async def register(self, ctx):

@@ -21,4 +21,4 @@ class CasinoBot(commands.Bot):
         await super().on_command_error(context, exception)
 
     async def take_register(self, ctx):
-        await ctx.send('あなたはまだゲームに登録していません！登録のために`p!register`コマンドを入力してください。')
+        await ctx.send('あなたはまだゲームに登録していません！登録のために`c!register`コマンドを入力してください。')
