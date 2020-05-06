@@ -40,7 +40,7 @@ class Database(commands.Cog):
         for user_id, money in self.bot.players.items():
             await self.db.set_money(user_id, money)
 
-        await setup()
+        await self.setup()
         await asyncio.sleep(10)
         self.bot.is_running = True
 
