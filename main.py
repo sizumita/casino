@@ -10,4 +10,12 @@ load_dotenv(dotenv_path)
 bot = CasinoBot()
 
 
+extensions = [
+    'cogs.database',
+]
+
+for extension in extensions:
+    bot.load_extension(extension)
+
+
 bot.run(os.environ.get("TOKEN"))
