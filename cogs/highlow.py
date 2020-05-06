@@ -15,6 +15,7 @@ class HighLow(commands.Cog):
 
     @commands.command(aliases=['hal', 'hl'])
     async def high_and_low(self, ctx, bid: int):
+        """ハイローゲームをします。引数にはbid金額を入れてください。"""
         if bid > self.bot.players[ctx.author.id]:
             await ctx.send('指定された金額はあなたの所持金をオーバーしています。')
             return
