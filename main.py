@@ -12,6 +12,8 @@ bot = CasinoBot()
 
 extensions = [
     'cogs.database',
+    'cogs.billing',
+    'cogs.highlow',
 ]
 
 for extension in extensions:
