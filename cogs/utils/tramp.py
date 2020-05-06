@@ -42,3 +42,7 @@ class Deck:
     def reset(self):
         self.cards = [Card(suit, rank) for rank in ranks for suit in suits]
         self.cards += [Joker() for i in range(self.joker_count)]
+
+    def take_back(self):
+        """最後に引いたやつを戻す"""
+        self.cards = [self.drawed.pop(-1)] + self.cards

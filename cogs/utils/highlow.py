@@ -52,7 +52,8 @@ class HighAndLow:
 
             if message.content == 'e':
                 if times == 0:
-                    await ctx.send('初回は終了できません！')
+                    await self.ctx.send('初回は終了できません！')
+                    self.deck.take_back()
                     continue
                 await self.ctx.send(f'ゲームを終了します。最終金額: {self.bid}nyan')
                 return self.bid
