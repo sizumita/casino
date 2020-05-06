@@ -9,12 +9,6 @@ class Billing(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def cog_check(self, ctx):
-        if ctx.author.id not in self.bot.players.keys():
-            await self.bot.take_register(ctx)
-            return False
-        return True
-
     @commands.command(aliases=['money', 'balance'])
     async def bal(self, ctx):
         """所持nyanを確認します。"""

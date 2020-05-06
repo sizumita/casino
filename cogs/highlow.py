@@ -7,6 +7,9 @@ class HighLow(commands.Cog):
         self.bot = bot
 
     async def cog_check(self, ctx):
+        if ctx.command == 'register':
+            return True
+
         if ctx.author.id not in self.bot.players.keys():
             await self.bot.take_register(ctx)
             return False
