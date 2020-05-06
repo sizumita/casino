@@ -5,7 +5,7 @@ import traceback
 
 class CasinoBot(commands.Bot):
     def __init__(self):
-        super().__init__('c!')
+        super().__init__('c.')
         self.is_running = True
         self.players = {}
         self.game_que = []
