@@ -7,4 +7,5 @@ class CasinoBot(commands.Bot):
         super().__init__('c!')
         self.is_running = True
         self.users = {}
+        self.game_que = []
         self.db = DB(self)
