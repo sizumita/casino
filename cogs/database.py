@@ -13,6 +13,12 @@ import datetime
 class Database(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        bot.loop.create_task(self.setup())
+        self.db = self.bot.db
+
+    async def setup(self):
+        for doc in (await self.db.all()):
+            self.bot.users[int(doc.id)] = doc.to_dict()['money']
 
     async def loop(self):
         while not self.bot.is_closed():
@@ -28,3 +34,7 @@ class Database(commands.Cog):
     async def update_database(self):
         self.bot.is_running = False
         await asyncio.sleep(30)
+
+
+def setup(bot):
+    return bot.add_cog(Database(bot))

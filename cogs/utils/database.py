@@ -25,6 +25,9 @@ class DB:
         r = await self.bot.loop.run_in_executor(self.executor, user.get)
         return r.to_dict()
 
+    async def all(self):
+        return await self.bot.loop.run_in_executor(self.executor, self.collection.stream)
+
     async def exists(self, user_id):
         if not self.documents:
             r = await self.get(user_id)
