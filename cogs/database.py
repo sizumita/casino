@@ -44,6 +44,14 @@ class Database(commands.Cog):
         await asyncio.sleep(10)
         self.bot.is_running = True
 
+    @commands.command()
+    @commands.is_owner
+    async def save(self, ctx):
+        await ctx.send('更新開始')
+        await self.update_database()
+        await ctx.send('更新終了')
+
+
 
 def setup(bot):
     return bot.add_cog(Database(bot))

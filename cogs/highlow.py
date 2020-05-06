@@ -25,6 +25,11 @@ class HighLow(commands.Cog):
         if ctx.author.id in self.bot.game_que:
             await ctx.send('あなたはすでにゲームを開始しています。')
             return
+
+        if bid <= 0:
+            await ctx.send('0以下の金額は指定できません。')
+            return
+
         self.bot.players[ctx.author.id] -= bid
         self.bot.game_que.append(ctx.author.id)
 

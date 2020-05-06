@@ -39,8 +39,8 @@ class DB:
 
     async def change_money(self, user_id, money):
         user = self.collection.document(str(user_id))
-        await self.bot.loop.run_in_executor(self.executor, user.update, {'money': (await self.get(user_id))['money'] + money})
+        await self.bot.loop.run_in_executor(self.executor, user.update, {'money': int((await self.get(user_id))['money'] + money)})
 
     async def set_money(self, user_id, money):
         user = self.collection.document(str(user_id))
-        await self.bot.loop.run_in_executor(self.executor, user.update, {'money': money})
+        await self.bot.loop.run_in_executor(self.executor, user.update, {'money': int(money)})

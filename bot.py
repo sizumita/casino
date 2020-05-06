@@ -1,5 +1,6 @@
 from discord.ext import commands
 from cogs.utils.database import DB
+import traceback
 
 
 class CasinoBot(commands.Bot):
@@ -18,7 +19,13 @@ class CasinoBot(commands.Bot):
             await context.send('引数が足りません。')
             return
 
-        await super().on_command_error(context, exception)
+        if isinstance(exception, commands.CommandNotFound):
+            return
+
+        orig_error = getattr(exception, "original", exception)
+        error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+        error_msg = "```py\n" + error_msg + "\n```"
+        await context.send(error_msg)
 
     async def take_register(self, ctx):
         await ctx.send('あなたはまだゲームに登録していません！登録のために`c!register`コマンドを入力してください。')
