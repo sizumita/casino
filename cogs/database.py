@@ -5,7 +5,6 @@
 最後に、is_runningをTrueにして、他のコマンドが動くようにする。
 """
 from discord.ext import commands
-import discord
 import asyncio
 import datetime
 
@@ -38,7 +37,7 @@ class Database(commands.Cog):
             await asyncio.sleep(5)
         for user_id, money in self.bot.users.items():
             await self.db.set_money(user_id, money)
-        
+
         await setup()
         await asyncio.sleep(10)
         self.bot.is_running = True

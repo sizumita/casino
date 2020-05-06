@@ -11,7 +11,7 @@ class DB:
     def __init__(self, bot):
         self.bot = bot
         self.db = firestore.client()
-        self.collection = db.collection('users')
+        self.collection = self.db.collection('users')
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=20)
         self.documents = {}
 
