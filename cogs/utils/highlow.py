@@ -42,7 +42,7 @@ class HighAndLow:
             embed.add_field(name='現在の掛け金', value=f'{self.bid}nyan')
             file = discord.File(card.path(), filename="image.png")
             embed.set_image(url="attachment://image.png")
-            await self.ctx.send(embed=embed)
+            await self.ctx.send(file=file, embed=embed)
             try:
                 message = await self.bot.wait_for('message', check=self.check, timeout=60)
             except asyncio.TimeoutError:
@@ -60,7 +60,7 @@ class HighAndLow:
                 file = discord.File(next.path(), filename="image.png")
                 embed.set_image(url="attachment://image.png")
 
-                await self.ctx.send(embed=embed)
+                await self.ctx.send(file=file, embed=embed)
                 await asyncio.sleep(2)
                 continue
 
@@ -69,7 +69,7 @@ class HighAndLow:
                 file = discord.File(next.path(), filename="image.png")
                 embed.set_image(url="attachment://image.png")
 
-                await self.ctx.send(embed=embed)
+                await self.ctx.send(file=file, embed=embed)
                 await asyncio.sleep(2)
                 continue
 
@@ -81,7 +81,7 @@ class HighAndLow:
                     file = discord.File(next.path(), filename="image.png")
                     embed.set_image(url="attachment://image.png")
 
-                    await self.ctx.send(embed=embed)
+                    await self.ctx.send(file=file, embed=embed)
                     await asyncio.sleep(2)
                     continue
                 else:
@@ -95,7 +95,7 @@ class HighAndLow:
                     file = discord.File(next.path(), filename="image.png")
                     embed.set_image(url="attachment://image.png")
 
-                    await self.ctx.send(embed=embed)
+                    await self.ctx.send(file=file, embed=embed)
                     await asyncio.sleep(2)
                     continue
                 else:
@@ -106,6 +106,6 @@ class HighAndLow:
         file = discord.File(next.path(), filename="image.png")
         embed.set_image(url="attachment://image.png")
 
-        await self.ctx.send(embed=embed)
+        await self.ctx.send(file=file, embed=embed)
         await asyncio.sleep(2)
         return 0

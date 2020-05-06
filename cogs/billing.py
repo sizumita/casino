@@ -8,7 +8,6 @@ class Billing(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
-        print('loaded')
 
     async def cog_check(self, ctx):
         if ctx.author.id not in self.bot.players.keys():

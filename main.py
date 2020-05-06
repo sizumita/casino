@@ -19,7 +19,5 @@ extensions = [
 for extension in extensions:
     bot.load_extension(extension)
 
-print(bot.cogs)
-
 
 bot.run(os.environ.get("TOKEN"))

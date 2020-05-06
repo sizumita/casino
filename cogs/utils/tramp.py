@@ -1,4 +1,5 @@
 import random
+import pathlib
 suits = ['c', 'd', 'h', 's']
 ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
@@ -8,15 +9,14 @@ class Card:
         self.rank = rank
 
     def path(self):
-        return f'./images/{self.suit}{self.rank}.png'
-
+        return str(pathlib.Path.cwd()/'images'/f'{self.suit}{self.rank}.png')
 
 class Joker(Card):
     def __init__(self):
         super().__init__(0, 0)
 
     def path(self):
-        return './images/joker.png'
+        return pathlib.Path.cwd()/'images'/f'joker.png'
 
 class Deck:
     def __init__(self, joker_count=0):

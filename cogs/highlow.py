@@ -27,7 +27,7 @@ class HighLow(commands.Cog):
         game = HighAndLow(self.bot, ctx, bid)
         result = await game.play()
 
-        self.bot.players[ctx.author.id] += bid
+        self.bot.players[ctx.author.id] += result
         self.bot.game_que.remove(ctx.author.id)
 
 
