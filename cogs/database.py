@@ -1,0 +1,30 @@
+"""
+朝6時に、botのis_running変数をFalseにし、
+全ての動作が終わった上でbotのusers変数をdatabaseに入れる
+その後botのusers変数を新しく取得した値で上書き。
+最後に、is_runningをTrueにして、他のコマンドが動くようにする。
+"""
+from discord.ext import commands
+import discord
+import asyncio
+import datetime
+
+
+class Database(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+    async def loop(self):
+        while not self.bot.is_closed():
+            now = datetime.datetime.now()
+            if now.hour >= 6:
+                target = datetime.datetime(now.year, now.month, now.date, 6) + datetime.timedelta(days=1)
+            else:
+                target = datetime.datetime(now.year, now.month, now.date, 6)
+            await asyncio.sleep(target.timestamp() - now.timestamp())
+
+            await self.update_database()
+
+    async def update_database(self):
+        self.bot.is_running = False
+        await asyncio.sleep(30)
