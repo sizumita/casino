@@ -6,6 +6,13 @@ class HighLow(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def cog_check(self, ctx):
+        if ctx.id not in self.bot.users.keys():
+            await self.bot.take_register()
+            return False
+
+        return True
+
     @commands.command(aliases=['hal', 'hl'])
     async def high_and_low(self, ctx, bid):
         if bid > self.bot.users[ctx.author.id]:
