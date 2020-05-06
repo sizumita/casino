@@ -18,7 +18,7 @@ class Database(commands.Cog):
 
     async def setup(self):
         for doc in (await self.db.all()):
-            self.bot.users[int(doc.id)] = doc.to_dict()['money']
+            self.bot.players[int(doc.id)] = doc.to_dict()['money']
 
     async def loop(self):
         while not self.bot.is_closed():
@@ -35,7 +35,7 @@ class Database(commands.Cog):
         self.bot.is_running = False
         while self.bot.game_que:
             await asyncio.sleep(5)
-        for user_id, money in self.bot.users.items():
+        for user_id, money in self.bot.players.items():
             await self.db.set_money(user_id, money)
 
         await setup()
