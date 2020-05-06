@@ -11,6 +11,9 @@ class CasinoBot(commands.Bot):
         self.game_que = []
         self.db = DB(self)
 
+    def get_money(self, user_id):
+        return self.players[int(user_id)]
+
     async def on_command_error(self, context, exception):
         if isinstance(exception, commands.CheckFailure):
             return
@@ -29,7 +32,7 @@ class CasinoBot(commands.Bot):
         await super().on_command_error(context, exception)
 
     async def take_register(self, ctx):
-        await ctx.send('あなたはまだゲームに登録していません！登録のために`c!register`コマンドを入力してください。')
+        await ctx.send(f'あなたはまだゲームに登録していません！登録のために`{self.command_prefix}register`コマンドを入力してください。')
 
     async def say_wait(self, ctx):
         await ctx.send('現在botは稼働していません。しばらくお待ちください。')
