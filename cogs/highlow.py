@@ -14,6 +14,10 @@ class HighLow(commands.Cog):
             await self.bot.take_register(ctx)
             return False
 
+        if not self.bot.is_running:
+            await self.bot.say_wait(ctx)
+            return False
+
         return True
 
     @commands.command(aliases=['hal', 'hl'])

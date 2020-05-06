@@ -30,3 +30,6 @@ class CasinoBot(commands.Bot):
 
     async def take_register(self, ctx):
         await ctx.send('あなたはまだゲームに登録していません！登録のために`c!register`コマンドを入力してください。')
+
+    async def say_wait(self, ctx):
+        await ctx.send('現在botは稼働していません。しばらくお待ちください。')

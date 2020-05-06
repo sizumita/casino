@@ -9,6 +9,13 @@ class Billing(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    async def cog_check(self, ctx):
+        if not self.bot.is_running:
+            await self.bot.say_wait(ctx)
+            return False
+
+        return True
+
     @commands.command(aliases=['money', 'balance'])
     async def bal(self, ctx):
         """所持nyanを確認します。"""
