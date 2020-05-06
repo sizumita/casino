@@ -15,17 +15,25 @@ class Billing(commands.Cog):
 
     @commands.command(aliases=['money', 'balance'])
     async def bal(self, ctx):
-        """所持金を確認します。"""
+        """所持nyanを確認します。"""
+        if ctx.id not in self.bot.users.keys():
+            await self.bot.take_register()
+            return
+        await ctx.send(f'あなたの所持nyanは{self.bot.users[ctx.author.id]}nyanです。')
 
     @commands.command()
     async def pay(self, ctx, to: discord.User, money: int):
         """指定したユーザーにお金を渡します。"""
+        if ctx.id not in self.bot.users.keys():
+            await self.bot.take_register()
+            return
+
         if to.id not in self.bot.users.keys():
             await ctx.send(f'ユーザー:{to.mention}はゲームに登録していません。')
             return
 
         if money > self.bot.users[ctx.author.id]:
-            await ctx.send('指定された金額はあなたの所持金をオーバーしています。')
+            await ctx.send('指定されたnyan額はあなたの所持金をオーバーしています。')
             return
 
     @commands.command()
