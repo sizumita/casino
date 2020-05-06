@@ -1,7 +1,6 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import asyncio
 import concurrent.futures
 
 cred = credentials.Certificate("serviceAccountKey.json")
@@ -28,11 +27,10 @@ class DB:
 
     async def exists(self, user_id):
         if not self.documents:
-            user = self.collection.document(str(user_id))
             r = await self.get(user_id)
         else:
             r = True if str(user_id) in self.documents.keys else False
-        
+
         if not r:
             return False
 
