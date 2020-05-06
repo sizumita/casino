@@ -22,10 +22,11 @@ class CasinoBot(commands.Bot):
         if isinstance(exception, commands.CommandNotFound):
             return
 
-        orig_error = getattr(exception, "original", exception)
-        error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-        error_msg = "```py\n" + error_msg[1500:] + "\n```"
-        await context.send(error_msg)
+        # orig_error = getattr(exception, "original", exception)
+        # error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
+        # error_msg = "```py\n" + error_msg[1500:] + "\n```"
+        # await context.send(error_msg)
+        await super().on_command_error(context, exception)
 
     async def take_register(self, ctx):
         await ctx.send('あなたはまだゲームに登録していません！登録のために`c!register`コマンドを入力してください。')

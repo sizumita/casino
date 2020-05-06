@@ -43,4 +43,9 @@ class DB:
 
     async def set_money(self, user_id, money):
         user = self.collection.document(str(user_id))
+
+        if not (await self.exists(user_id)):
+            await self.bot.loop.run_in_executor(self.executor, user.set, {'money': int(money)})
+            return
+
         await self.bot.loop.run_in_executor(self.executor, user.update, {'money': int(money)})
