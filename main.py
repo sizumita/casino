@@ -11,13 +11,15 @@ bot = CasinoBot()
 
 
 extensions = [
-    'cogs.database',
     'cogs.billing',
     'cogs.highlow',
+    'cogs.database',
 ]
 
 for extension in extensions:
     bot.load_extension(extension)
+
+print(bot.cogs)
 
 
 bot.run(os.environ.get("TOKEN"))

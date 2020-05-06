@@ -85,7 +85,7 @@ class HighAndLow:
                     await asyncio.sleep(2)
                     continue
                 else:
-                    return await self.lose()
+                    return await self.lose(next)
             
             else:
                 if next.rank < card.rank:
@@ -99,7 +99,7 @@ class HighAndLow:
                     await asyncio.sleep(2)
                     continue
                 else:
-                    return await self.lose()
+                    return await self.lose(next)
 
     async def lose(self, next):
         embed = discord.Embed(title='負け...', description='あなたは外しました...掛け金を全て失います。')

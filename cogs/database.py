@@ -13,20 +13,22 @@ class Database(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.loop.create_task(self.setup())
-        bot.loop.create_task(setup.loop())
+        bot.loop.create_task(self.loop())
         self.db = self.bot.db
 
     async def setup(self):
+        await self.bot.wait_until_ready()
         for doc in (await self.db.all()):
             self.bot.players[int(doc.id)] = doc.to_dict()['money']
 
     async def loop(self):
+        await self.bot.wait_until_ready()
         while not self.bot.is_closed():
             now = datetime.datetime.now()
             if now.hour >= 6:
-                target = datetime.datetime(now.year, now.month, now.date, 6) + datetime.timedelta(days=1)
+                target = datetime.datetime(now.year, now.month, now.day, 6, 0, 0, 0) + datetime.timedelta(days=1)
             else:
-                target = datetime.datetime(now.year, now.month, now.date, 6)
+                target = datetime.datetime(now.year, now.month, now.day, 6, 0, 0, 0)
             await asyncio.sleep(target.timestamp() - now.timestamp())
 
             await self.update_database()

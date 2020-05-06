@@ -8,24 +8,27 @@ class Billing(commands.Cog):
     """
     def __init__(self, bot):
         self.bot = bot
+        print('loaded')
 
     async def cog_check(self, ctx):
         if ctx.author.id not in self.bot.players.keys():
+            await self.bot.take_register(ctx)
             return False
+        return True
 
     @commands.command(aliases=['money', 'balance'])
     async def bal(self, ctx):
         """所持nyanを確認します。"""
-        if ctx.id not in self.bot.players.keys():
-            await self.bot.take_register()
+        if ctx.author.id not in self.bot.players.keys():
+            await self.bot.take_register(ctx)
             return
         await ctx.send(f'あなたの所持nyanは{self.bot.players[ctx.author.id]}nyanです。')
 
     @commands.command()
     async def pay(self, ctx, to: discord.User, money: int):
         """指定したユーザーにお金を渡します。"""
-        if ctx.id not in self.bot.players.keys():
-            await self.bot.take_register()
+        if ctx.author.id not in self.bot.players.keys():
+            await self.bot.take_register(ctx)
             return
 
         if to.id not in self.bot.players.keys():
