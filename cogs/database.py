@@ -45,7 +45,7 @@ class Database(commands.Cog):
         self.bot.is_running = True
 
     @commands.command()
-    @commands.is_owner
+    @commands.is_owner()
     async def save(self, ctx):
         await ctx.send('更新開始')
         await self.update_database()

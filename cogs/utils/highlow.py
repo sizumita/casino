@@ -31,6 +31,7 @@ class HighAndLow:
     async def play(self) -> int:
         self.deck.shuffle()
         embed = discord.Embed()
+        times = 0
         while not self.bot.is_closed():
             card = self.deck.draw()
             embed = discord.Embed(title='High And Law', 
@@ -50,6 +51,9 @@ class HighAndLow:
                 return self.bid
 
             if message.content == 'e':
+                if times == 0:
+                    await ctx.send('初回は終了できません！')
+                    continue
                 await self.ctx.send(f'ゲームを終了します。最終金額: {self.bid}nyan')
                 return self.bid
             
@@ -62,6 +66,7 @@ class HighAndLow:
 
                 await self.ctx.send(file=file, embed=embed)
                 await asyncio.sleep(2)
+                times += 1
                 continue
 
             if next.rank == card.rank:
@@ -71,6 +76,7 @@ class HighAndLow:
 
                 await self.ctx.send(file=file, embed=embed)
                 await asyncio.sleep(2)
+                times += 1
                 continue
 
             if message.content == 'h':
@@ -83,6 +89,7 @@ class HighAndLow:
 
                     await self.ctx.send(file=file, embed=embed)
                     await asyncio.sleep(2)
+                    times += 1
                     continue
                 else:
                     return await self.lose(next)
@@ -97,6 +104,7 @@ class HighAndLow:
 
                     await self.ctx.send(file=file, embed=embed)
                     await asyncio.sleep(2)
+                    times += 1
                     continue
                 else:
                     return await self.lose(next)
