@@ -14,6 +14,7 @@ class Database(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.loop.create_task(self.setup())
+        bot.loop.create_task(setup.loop())
         self.db = self.bot.db
 
     async def setup(self):
@@ -33,7 +34,14 @@ class Database(commands.Cog):
 
     async def update_database(self):
         self.bot.is_running = False
-        await asyncio.sleep(30)
+        while self.bot.game_que:
+            await asyncio.sleep(5)
+        for user_id, money in self.bot.users.items():
+            await self.db.set_money(user_id, money)
+        
+        await setup()
+        await asyncio.sleep(10)
+        self.bot.is_running = True
 
 
 def setup(bot):
