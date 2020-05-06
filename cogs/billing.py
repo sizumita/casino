@@ -23,7 +23,7 @@ class Billing(commands.Cog):
         if to.id not in self.bot.users.keys():
             await ctx.send(f'ユーザー:{to.mention}はゲームに登録していません。')
             return
-        
+
         if money > self.bot.users[ctx.author.id]:
             await ctx.send('指定された金額はあなたの所持金をオーバーしています。')
             return
@@ -35,7 +35,7 @@ class Billing(commands.Cog):
             await ctx.send('既に登録されています。')
             return
         self.bot.users[ctx.author.id] = 10000
-        await ctx.send('登録されました。')        
+        await ctx.send('登録されました。')
 
 
 def setup(bot):
