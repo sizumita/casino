@@ -41,4 +41,4 @@ class Deck:
 
     def reset(self):
         self.cards = [Card(suit, rank) for rank in ranks for suit in suits]
-        self.cards += [Joker() for i in range(joker_count)]
+        self.cards += [Joker() for i in range(self.joker_count)]

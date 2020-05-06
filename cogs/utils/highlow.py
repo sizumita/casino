@@ -1,5 +1,4 @@
-import random
-from cogs.utils.tramp import Card, Joker, Deck
+from cogs.utils.tramp import Deck
 import discord
 import asyncio
 magnifications = {
@@ -25,7 +24,7 @@ class HighAndLow:
         self.ctx = ctx
         self.deck = Deck()
         self.bid = bid
-    
+
     def check(self, m):
         return m.author.id == self.ctx.author.id and m.channel.id == self.ctx.channel.id and m.content in ['h', 'l', 'e']
 
@@ -45,7 +44,7 @@ class HighAndLow:
             embed.set_image(url="attachment://image.png")
             await self.ctx.send(embed=embed)
             try:
-                message = await bot.wait_for('message', check=self.check, timeout=60)
+                message = await self.bot.wait_for('message', check=self.check, timeout=60)
             except asyncio.TimeoutError:
                 await self.ctx.send('60秒間入力がなかったため、ゲームを終了しました。現在の金額を返却します。')
                 return self.bid
