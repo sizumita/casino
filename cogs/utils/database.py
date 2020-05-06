@@ -6,14 +6,12 @@ import concurrent.futures
 cred = credentials.Certificate("serviceAccountKey.json")
 firebase_admin.initialize_app(cred)
 
-db = firestore.client()
-
 
 class DB:
     def __init__(self, bot):
         self.bot = bot
         self.db = firestore.client()
-        self.collection = db.collection('users')
+        self.collection = self.db.collection('users')
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=20)
         self.documents = {}
 
@@ -24,6 +22,9 @@ class DB:
             user = self.documents[str(user_id)]
         r = await self.bot.loop.run_in_executor(self.executor, user.get)
         return r.to_dict()
+
+    async def all(self):
+        return await self.bot.loop.run_in_executor(self.executor, self.collection.stream)
 
     async def exists(self, user_id):
         if not self.documents:
