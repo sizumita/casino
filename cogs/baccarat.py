@@ -25,7 +25,7 @@ class BaccaratCog(commands.Cog):
 
     @commands.command(aliases=['bacara'])
     async def baccarat(self, ctx):
-        if self.bot.get_money(ctx.author.id):
+        if self.bot.get_money(ctx.author.id) == 0:
             await ctx.send('所持金がないプレイヤーは開始できません。')
             return
         
@@ -39,7 +39,7 @@ class BaccaratCog(commands.Cog):
 
         self.games.append(ctx.channel.id)
         self.bills[ctx.channel.id] = {'users': {}, 'parent': ctx.author}
-        await ctx.send('バカラを開始します。ユーザーを募集します。参加したい人はこのチャンネルにて、`c.bjoin <BANKERもしくはPLAYER> <bid金額>`と入力してください。\n' \
+        await ctx.send('バカラを開始します。ユーザーを募集します。参加したい人はこのチャンネルにて、`c.bjoin <BANKERもしくはPLAYERもしくはTIE> <bid金額>`と入力してください。\n' \
             '親は、募集完了した時に`c.bstart`と入力してください。(親も参加登録する必要があります。)')
     
     @commands.command()
@@ -59,7 +59,7 @@ class BaccaratCog(commands.Cog):
             await ctx.send('このチャンネルではゲームは開始されていません。')
             return
         
-        if target.upper() not in ['BANKER', 'PLAYER']:
+        if target.upper() not in ['BANKER', 'PLAYER', 'TIE']:
             await ctx.send('bid先の指定が間違っています。`BANKER`もしくは`PLAYERにしてください。')
 
         self.bot.game_que.append(ctx.author.id)
@@ -79,7 +79,21 @@ class BaccaratCog(commands.Cog):
 
         await ctx.send('参加締め切りました。')
         await asyncio.sleep(2)
-        game = Baccarat(bot, ctx, self.bills[ctx.channel.id])
+        game = Baccarat(self.bot, ctx, self.bills[ctx.channel.id])
+        winner = await game.start()
+        win_users = [[key, value[1]] for key, value in self.bills[ctx.channel.id]['users'].items() if value[0] == winner]
+        text = '賞金一覧\n'
+        for user, bid in win_users:
+            r = bid*2 if winner != 'BANKER' else bid*2 * 0.95 // 1
+            text += f'{user.mention}: {r}nyan\n'
+            self.bot.players[user.id] += r
+
+        for user in self.bills[ctx.channel.id]['users'].keys():
+            self.bot.game_que.remove(user.id)
+
+        await ctx.send(text)
+        self.games.remove(ctx.channel.id)
+        del self.bills[ctx.channel.id]
 
 
 def setup(bot):

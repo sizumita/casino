@@ -58,6 +58,7 @@ emoji_id_dict = {
     'joker': 707841679729754113,
 }
 
+
 class Card:
     def __init__(self, suit, rank):
         self.suit = suit
