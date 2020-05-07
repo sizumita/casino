@@ -21,4 +21,5 @@ for extension in extensions:
     bot.load_extension(extension)
 
 
-bot.run(os.environ.get("TOKEN"))
+# bot.run(os.environ.get("TOKEN"))
+bot.run('NzA3MjIwOTAxODMzMjExOTU1.XrO6Fw.KhuoR7ozUvjkBJFPPjNwxgA19nY')

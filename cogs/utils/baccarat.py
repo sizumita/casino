@@ -57,6 +57,7 @@ class Baccarat:
             self.player_cards.append(card)
             self.player_count += num
 
+        for x in range(2):
             card = self.deck.draw()
             num = card.rank
             if card.rank >= 10:
@@ -67,7 +68,8 @@ class Baccarat:
         if self.banker_count >= 10:
             self.banker_count = int(str(self.banker_count)[-1])
         if self.player_count >= 10:
-            self.banker_count = int(str(self.player_count)[-1])
+            self.player_count = int(str(self.player_count)[-1])
+
         await asyncio.sleep(3)
         await self.send('では、結果を見てみましょう。5秒後に表示されます...')
         await asyncio.sleep(5)
@@ -135,8 +137,8 @@ class Baccarat:
             self.player_cards.append(card)
             self.player_count += num
             if self.player_count >= 10:
-                self.banker_count = int(str(self.player_count)[-1])
-            player_card_text = ''.join(f'<:{card.name}:{card.emoji_id}>' for card in self.player_cards)
+                self.player_count = int(str(self.player_count)[-1])
+            player_card_text = ''.join(f'<:{card.name}:{card.emoji_id()}>' for card in self.player_cards)
             embed = discord.Embed(title='結果')
             embed.add_field(name='PLAYER', value=player_card_text, inline=False)
             embed.add_field(name='結果', value=f'PLAYER: {self.player_count}\n', inline=False)
@@ -228,7 +230,7 @@ class Baccarat:
         self.banker_count += num
         if self.banker_count >= 10:
             self.banker_count = int(str(self.player_count)[-1])
-        banker_card_text = ''.join(f'<:{card.name}:{card.emoji_id}>' for card in self.banker_cards)
+        banker_card_text = ''.join(f'<:{card.name}:{card.emoji_id()}>' for card in self.banker_cards)
         embed = discord.Embed(title='結果')
         embed.add_field(name='BANKER', value=banker_card_text, inline=False)
         embed.add_field(name='結果', value=f'BANKER: {self.banker_count}\n', inline=False)
