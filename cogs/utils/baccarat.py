@@ -85,7 +85,7 @@ class Baccarat:
             elif self.banker_count < self.player_count:
                 winner = 'PLAYER'
 
-            if winner is 'TIE':
+            if winner == 'TIE':
                 await self.send('両者同じ数字により、タイ(引き分け)!\nタイに掛けた方の報酬が2倍になります。')
 
             if winner == 'BANKER':
@@ -114,7 +114,7 @@ class Baccarat:
         elif self.banker_count < self.player_count:
             winner = 'PLAYER'
         
-        if winner is 'TIE':
+        if winner == 'TIE':
             await self.send('両者同じ数字により、タイ(引き分け)!\nタイに掛けた方の報酬が2倍になります。')
 
         if winner == 'BANKER':
