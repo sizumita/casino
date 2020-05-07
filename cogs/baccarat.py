@@ -1,8 +1,9 @@
 from discord.ext import commands
 import asyncio
+from cogs.utils.baccarat import Baccarat
 
 
-class Baccarat(commands.Cog):
+class BaccaratCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.games = []
@@ -38,11 +39,11 @@ class Baccarat(commands.Cog):
 
         self.games.append(ctx.channel.id)
         self.bills[ctx.channel.id] = {'users': {}, 'parent': ctx.author}
-        await ctx.send('バカラを開始します。ユーザーを募集します。参加したい人はこのチャンネルにて、`c.bjoin <bid金額>`と入力してください。\n' \
+        await ctx.send('バカラを開始します。ユーザーを募集します。参加したい人はこのチャンネルにて、`c.bjoin <BANKERもしくはPLAYER> <bid金額>`と入力してください。\n' \
             '親は、募集完了した時に`c.bstart`と入力してください。(親も参加登録する必要があります。)')
     
     @commands.command()
-    async def bjoin(self, ctx, bid: int):
+    async def bjoin(self, ctx, target: str, bid: int):
         if bid > self.bot.players[ctx.author.id]:
             await ctx.send('指定された金額はあなたの所持金をオーバーしています。')
             return
@@ -57,9 +58,12 @@ class Baccarat(commands.Cog):
         if ctx.channel.id not in self.bills.keys():
             await ctx.send('このチャンネルではゲームは開始されていません。')
             return
+        
+        if target.upper() not in ['BANKER', 'PLAYER']:
+            await ctx.send('bid先の指定が間違っています。`BANKER`もしくは`PLAYERにしてください。')
 
         self.bot.game_que.append(ctx.author.id)
-        self.bills[ctx.channel.id]['users'][ctx.author] = bid
+        self.bills[ctx.channel.id]['users'][ctx.author] = [target.upper(), bid]
         self.bot.players[ctx.author.id] -= bid
         await ctx.send('参加完了しました！')
 
@@ -75,4 +79,9 @@ class Baccarat(commands.Cog):
 
         await ctx.send('参加締め切りました。')
         await asyncio.sleep(2)
+        game = Baccarat(bot, ctx, self.bills[ctx.channel.id])
+
+
+def setup(bot):
+    return bot.add_cog(BaccaratCog(bot))
 
