@@ -15,6 +15,7 @@ extensions = [
     'cogs.highlow',
     'cogs.database',
     'cogs.baccarat',
+    'cogs.blackjack',
 ]
 
 for extension in extensions:
