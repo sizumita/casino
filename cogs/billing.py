@@ -17,12 +17,19 @@ class Billing(commands.Cog):
         return True
 
     @commands.command(aliases=['money', 'balance'])
-    async def bal(self, ctx):
+    async def bal(self, ctx, user: discord.User=None):
         """所持nyanを確認します。"""
+        if user:
+            if user.id not in self.bot.players.keys():
+                await ctx.send(f'ユーザー:{user.mention}はゲームに登録していません。')
+                return
+            target = user
+        else:
+            target = ctx.author
         if ctx.author.id not in self.bot.players.keys():
             await self.bot.take_register(ctx)
             return
-        await ctx.send(f'あなたの所持nyanは{self.bot.players[ctx.author.id]}nyanです。')
+        await ctx.send(f'{target.mention}の所持nyanは{self.bot.players[target.id]}nyanです。')
 
     @commands.command()
     async def pay(self, ctx, to: discord.User, money: int):
