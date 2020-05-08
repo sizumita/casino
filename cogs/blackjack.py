@@ -36,8 +36,12 @@ class Blackjack(commands.Cog):
 
         self.bot.players[ctx.author.id] -= bid
         self.bot.game_que.append(ctx.author.id)
-        game = BlackJackGame(bot, ctx, bid)
+        game = BlackJackGame(self.bot, ctx, bid)
         result = await game.start()
         await ctx.send(f'報酬: {result}nyan')
         self.bot.players[ctx.author.id] += result
         self.bot.game_que.remove(ctx.author.id)
+
+
+def setup(bot):
+    return bot.add_cog(Blackjack(bot))

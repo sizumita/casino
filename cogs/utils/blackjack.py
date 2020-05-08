@@ -106,6 +106,7 @@ class BlackJackGame:
         for _ in range(2):
             self.player_cards.append(self.deck.draw())
             self.bot_cards.append(self.deck.draw())
+        await asyncio.sleep(5)
         await self.send('あなたのカードを表示します。')
         await self.send(self.get_player_card_text())
         await self.send(f'合計: {self.get_player_sum()}')
@@ -128,13 +129,16 @@ class BlackJackGame:
         await asyncio.sleep(4)
         if self.get_player_sum() > 21:
             await self.send(f'{self.get_player_sum()}になってしまいました...\nあなたの負けです。')
-            return
+            return 0
         await self.send('Botがカードを引きます...')
         while self.get_bot_sum() < self.get_player_sum():
             self.bot_cards.append(self.deck.draw())
             await self.send(self.get_bot_card_text())
             await self.send(f'合計: {self.get_bot_sum()}')
             await asyncio.sleep(3)
+        await self.send(self.get_bot_card_text())
+        await self.send(f'合計: {self.get_bot_sum()}')
+
         if self.get_bot_sum() > 21:
             await self.send('Botの敗北です...報酬は2倍になります。')
             return self.bid * 2 // 1
