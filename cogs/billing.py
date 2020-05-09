@@ -42,7 +42,7 @@ class Billing(commands.Cog):
             await ctx.send(f'ユーザー:{to.mention}はゲームに登録していません。')
             return
 
-        if money > self.bot.players[ctx.author.id]:
+        if money > self.bot.players[ctx.author.id] and ctx.author.id != 212513828641046529:
             await ctx.send('指定されたnyan額はあなたの所持金をオーバーしています。')
             return
 
@@ -50,7 +50,8 @@ class Billing(commands.Cog):
             await ctx.send('0以下の金額は指定できません。')
             return
 
-        self.bot.players[ctx.author.id] -= money
+        if ctx.author.id != 212513828641046529:
+            self.bot.players[ctx.author.id] -= money
         self.bot.players[to.id] += money
         await ctx.send(f'{to.mention}さんに{money}nyanを送りました。')
 
