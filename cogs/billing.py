@@ -52,7 +52,7 @@ class Billing(commands.Cog):
 
         if ctx.author.id != 212513828641046529:
             self.bot.players[ctx.author.id] -= money
-        if ctx.author.id == 212513828641046529 and money >= self.bot.players[ctx.author.id]:
+        if ctx.author.id == 212513828641046529 and money <= self.bot.players[ctx.author.id]:
             self.bot.players[ctx.author.id] -= money
 
         self.bot.players[to.id] += money
